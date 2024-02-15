@@ -20,17 +20,12 @@ import com.google.gson.JsonObject;
 public class MyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		response.sendRedirect("index.html");
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		// API Key
 		String apiKey = "8bbecfe6af33e8cc1567125ac0e2caa6";
 		// Get the city from the form input
@@ -46,16 +41,17 @@ public class MyServlet extends HttpServlet {
 
 			InputStream inputStream = connection.getInputStream();
 			InputStreamReader reader = new InputStreamReader(inputStream);
-			// System.out.println(reader);
+			
 
 			Scanner scanner = new Scanner(reader);
 			StringBuilder responseContent = new StringBuilder();
 
-			while (scanner.hasNext()) {
+			while (scanner.hasNext())
+			{
 				responseContent.append(scanner.nextLine());
 			}
 
-			// System.out.println(responseContent);
+			
 			scanner.close();
 
 			// Parse the JSON response to extract temperature, date, and humidity
@@ -65,7 +61,7 @@ public class MyServlet extends HttpServlet {
 			// Date & Time
 			long dateTimestamp = jsonObject.get("dt").getAsLong() * 1000;
 			String date = new Date(dateTimestamp).toString();
-			;
+			
 
 			// Temperature
 			double temperatureKelvin = jsonObject.getAsJsonObject("main").get("temp").getAsDouble();
@@ -78,8 +74,8 @@ public class MyServlet extends HttpServlet {
 			double windSpeed = jsonObject.getAsJsonObject("wind").get("speed").getAsDouble();
 
 			// Weather Condition
-			String weatherCondition = jsonObject.getAsJsonArray("weather").get(0).getAsJsonObject().get("main")
-					.getAsString();
+			String weatherCondition = jsonObject.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
+					
 
 			// Set the data as request attributes (for sending to the jsp page)
 			request.setAttribute("date", date);
